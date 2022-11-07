@@ -1,4 +1,4 @@
-package menager;
+package manager;
 
 import resource.SingleFormat;
 import procedure.*;
