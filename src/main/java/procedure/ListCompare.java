@@ -7,45 +7,53 @@ import java.util.List;
 
 public class ListCompare {
 
-    public void compare(StorageMemory storageMemory) {
+    public void compare(StorageMemory storage) {
         int count;
         List<String> listR = new ArrayList<>();
-        for (int i = 0; i < storageMemory.getListOne().size(); i++) {
+        List<String> listOne = storage.getListOne();
+        List<String> listTwo = storage.getListTwo();
+        for (int i = 0; i < listOne.size(); i++) {
             count = 0;
-            for (int j = 0; j < storageMemory.getListTwo().size(); j++) {
-                if (storageMemory.getListOne().get(i).equals(storageMemory.getListTwo().get(j))) {
-                    listR.add(lineString(storageMemory.getListOne().get(i), storageMemory.getListTwo().get(j)));
+            for (int j = 0; j < listTwo.size(); j++) {
+                if (equivalentData(listOne.get(i), listTwo.get(j))) {
+                    listR.add(listOne.get(i) + " " + listTwo.get(j));
+                    //j++;
                 } else
                     count++;
             }
-            if (count == storageMemory.getListTwo().size()) {
+            if (count == listTwo.size()) {
                 listR.add("--");
             }
         }
-        storageMemory.setListResult(listR);
+        storage.setListResult(listR);
     }
 
-    public void compareTxt(StorageMemory storageMemory) {
+    private boolean equivalentData(String s1, String s2) {
+
+            if(s2.equals(s1))
+                return true;
+            else
+                return false;
+
+    }
+
+    public void compareTxt(StorageMemory storage) {
         int count;
         List<String> listR = new ArrayList<>();
-        for (int i = 0; i < storageMemory.getListOne().size(); i++) {
+        for (int i = 0; i < storage.getListOne().size(); i++) {
             count = 0;
-            for (int j = 0; j < storageMemory.getListTwo().size(); j++) {
-                if (storageMemory.getListOne().get(i).equals(storageMemory.getListTwo().get(j))) {
+            for (int j = 0; j < storage.getListTwo().size(); j++) {
+                if (storage.getListOne().get(i).equals(storage.getListTwo().get(j))) {
                     listR.add("OK");
                 } else
                     count++;
             }
-            if (count == storageMemory.getListTwo().size()) {
+            if (count == storage.getListTwo().size()) {
                 listR.add("--");
             }
         }
-        storageMemory.setListResult(listR);
+        storage.setListResult(listR);
     }
 
-    private String lineString(String s, String s1) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(s).append("  ").append(s1);
-        return sb.substring(0);
-    }
+
 }

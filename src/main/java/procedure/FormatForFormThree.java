@@ -6,7 +6,7 @@ import resource.StorageMemory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FormatForFormThree implements SingleFormat {
+public class FormatForFormThree extends Format{
     @Override
     public void format(StorageMemory storageMemory) {
         List<String> list1 = new ArrayList<>();
@@ -24,7 +24,6 @@ public class FormatForFormThree implements SingleFormat {
 
         if (sb.indexOf("№") >= 0)
             sb.deleteCharAt(sb.indexOf("№"));
-
         if (sb.indexOf(" ") >= 0)
             sb.deleteCharAt(sb.indexOf(" "));
         if (sb.length() >= 17) {

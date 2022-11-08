@@ -3,12 +3,9 @@ package resource;
 import java.util.List;
 
 public class StorageMemory {
-
     private List<String> listOne;
     private List<String> listTwo;
-
     private List<String> listResult;
-
     public List<String> getListResult() {
         return listResult;
     }

@@ -6,7 +6,7 @@ import resource.StorageMemory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FormatForFormSix implements SingleFormat {
+public class FormatForFormSix extends Format {
 
     @Override
     public void format(StorageMemory sm) {
