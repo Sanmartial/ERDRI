@@ -42,12 +42,13 @@ public class Procedure {
     public void start() throws IOException {
 
         System.out.println(
-                          "1- сравнить два списка ЕРДР (listOne.txt listTwo.txt)\n"
+                "1- сравнить два списка ЕРДР (listOne.txt listTwo.txt)\n"
                         + "2- сравнить любые два аналогичных списка (listOne.txt listTwo.txt)\n"
                         + "3- подготовить список ердр в формате 1 2021 10001-1234567 ( listOne.txt )\n"
                         + "4- подготовить список ердр в формате 12021100011234567000 (с 000 в конце) (listOne.txt)\n"
                         + "5- преобразовать форму статьи ККУ cт.185 ч.1 в простую форму 185 (listOne.txt)\n"
-                        + "6- добавление строк а также проверка списка фамилий (для выплат) (listOne.txt)");
+                        + "6- добавление строк, а также проверка списка фамилий (для выплат) (listOne.txt)\n"
+                        + "7- создание формы для командировки (listOne.txt)");
         userChoice.choice();
         //в зависимости от выбраного варианта:
         //1 - сравнить два списка compare two lists
@@ -62,9 +63,7 @@ public class Procedure {
             //д - привести списки к единому формату
             singleFormatCompare.format(storageMemory);
             //е - сравнить два списка
-
             listCompare.compare(storageMemory);
-
             //ж - сохранить результат и вывести его для использование в тхт файл "D:\\Test\\ErdrPlus\\Result.txt";
             readWriteInf.writeWithCodding(pathResultTxt, storageMemory);
         }
@@ -76,7 +75,6 @@ public class Procedure {
             listCompare.compareTxt(storageMemory);
             readWriteInf.writeWithCodding(pathResultTxt, storageMemory);
         }
-
         if (userChoice.getChoice() == 3) {
             //2- подготовить список в формате prepare list like this pattern 1 2021 10001-1234567
             //а - считываем информацию с листа listOne
@@ -86,14 +84,11 @@ public class Procedure {
             //б.1 - для чего убираем лишнее и добавляем три ноля в конце
             readWriteInf.writeWithCodding(pathResultTxt, storageMemory);
         }
-
-        //4 - подготовить список в формате prepare list like this pattern 12021100011234567000 (with 000 )
         if (userChoice.getChoice() == 4) {
             storageMemory.setListOne(readWriteInf.readWithCoding(pathListOneTxt));
             singleFormat4.format(storageMemory);
             readWriteInf.writeWithCodding(pathResultTxt, storageMemory);
         }
-        //5 - преобразовать форму статьи ККУ cт.185 ч.1 в простую форму 185 (Excel файл statUK)
         if (userChoice.getChoice() == 5) {
             storageMemory.setListOne(readWriteInf.readWithCoding(pathListOneTxt));
             userChoice.setFix();
@@ -103,10 +98,18 @@ public class Procedure {
                 fixList.listProccess(storageMemory, arrS1);
             readWriteInf.writeWithCodding(pathResultTxt, storageMemory);
         }
-
         if (userChoice.getChoice() == 6) {
             storageMemory.setListOne(readWriteInf.readWithCoding(pathListOneTxt));
             singleFormat6.format(storageMemory);
+            readWriteInf.writeWithCodding(pathResultTxt, storageMemory);
+        }
+        if (userChoice.getChoice() == 7) {
+            storageMemory.setListOne(readWriteInf.readWithCoding(pathListOneTxt));
+            //storageMemory.setListPoliceman(new Separate().getListPoliceman(storageMemory));
+           new SeparateList().separateListEmployees(storageMemory);
+//            storageMemory.getListResult().stream().forEach(s ->{
+//                System.out.println(s);
+//            });
             readWriteInf.writeWithCodding(pathResultTxt, storageMemory);
         }
     }

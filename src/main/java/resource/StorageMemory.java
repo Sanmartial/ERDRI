@@ -1,13 +1,25 @@
 package resource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StorageMemory {
+
     private List<String> listOne;
     private List<String> listTwo;
     private List<String> listResult;
     public List<String> getListResult() {
         return listResult;
+    }
+
+    private List <Policeman> listPoliceman = new ArrayList<>();
+
+    public List<Policeman> getListPoliceman() {
+        return listPoliceman;
+    }
+
+    public void setListPoliceman(List<Policeman> listPoliceman) {
+        this.listPoliceman = listPoliceman;
     }
 
     public void setListResult(List<String> listResult) {
