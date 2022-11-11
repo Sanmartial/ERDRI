@@ -286,6 +286,7 @@ public class SeparateList {
     } //меняем окончание отчества
 
     private String setPosition(String fromList) {
+
         String word1;
         String word2;
         StringBuilder sb = new StringBuilder();
@@ -326,7 +327,6 @@ public class SeparateList {
             sb1.append(sb.substring(0, sb.length() - 3)).append("ині".toLowerCase(Locale.ROOT));
             return sb1.substring(0) + " " + word2;
         } else
-            return list;
-    } //находим должность
+   return sb1.substring(0); } //находим должность
 
 }

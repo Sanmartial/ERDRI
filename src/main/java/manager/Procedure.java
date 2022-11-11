@@ -48,7 +48,7 @@ public class Procedure {
                         + "4- подготовить список ердр в формате 12021100011234567000 (с 000 в конце) (listOne.txt)\n"
                         + "5- преобразовать форму статьи ККУ cт.185 ч.1 в простую форму 185 (listOne.txt)\n"
                         + "6- добавление строк, а также проверка списка фамилий (для выплат) (listOne.txt)\n"
-                        + "7- создание формы для командировки (listOne.txt)");
+                        + "7- создание формы для командировки. Внимание!!! Возможно неполное названия должности (listOne.txt)");
         userChoice.choice();
         //в зависимости от выбраного варианта:
         //1 - сравнить два списка compare two lists
@@ -107,10 +107,13 @@ public class Procedure {
             storageMemory.setListOne(readWriteInf.readWithCoding(pathListOneTxt));
             //storageMemory.setListPoliceman(new Separate().getListPoliceman(storageMemory));
            new SeparateList().separateListEmployees(storageMemory);
-//            storageMemory.getListResult().stream().forEach(s ->{
-//                System.out.println(s);
-//            });
+//            storageMemory.getListResult().stream().forEach(System.out::println);
             readWriteInf.writeWithCodding(pathResultTxt, storageMemory);
+
+
+
+            };
         }
     }
-}
+
+
