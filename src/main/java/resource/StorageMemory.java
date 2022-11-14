@@ -12,14 +12,23 @@ public class StorageMemory {
         return listResult;
     }
 
-    private List <Policeman> listPoliceman = new ArrayList<>();
+    private List <Policeman> listPolicemanOne = new ArrayList<>();
+    private List <Policeman> listPolicemanTwo = new ArrayList<>();
 
-    public List<Policeman> getListPoliceman() {
-        return listPoliceman;
+    public List<Policeman> getListPolicemanOne() {
+        return listPolicemanOne;
     }
 
-    public void setListPoliceman(List<Policeman> listPoliceman) {
-        this.listPoliceman = listPoliceman;
+    public void setListPolicemanOne(List<Policeman> listPolicemanOne) {
+        this.listPolicemanOne = listPolicemanOne;
+    }
+
+    public List<Policeman> getListPolicemanTwo() {
+        return listPolicemanTwo;
+    }
+
+    public void setListPolicemanTwo(List<Policeman> listPolicemanTwo) {
+        this.listPolicemanTwo = listPolicemanTwo;
     }
 
     public void setListResult(List<String> listResult) {

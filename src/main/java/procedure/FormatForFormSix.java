@@ -1,6 +1,5 @@
 package procedure;
 
-import resource.SingleFormat;
 import resource.StorageMemory;
 
 import java.util.ArrayList;

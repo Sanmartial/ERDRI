@@ -1,15 +1,13 @@
 package procedure;
 
-import resource.SingleFormat;
 import resource.StorageMemory;
 
-public class Format implements SingleFormat {
-    @Override
+public class Format {
+
     public void format(StorageMemory storageMemory) {
 
     }
 
-    @Override
     public String stringErdr(String s) {
        String ss = builderLine(s);
        return ss;

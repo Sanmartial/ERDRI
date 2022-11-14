@@ -1,28 +1,24 @@
 package manager;
 
-import resource.SingleFormat;
 import procedure.*;
 import resource.StorageMemory;
 
 import java.io.IOException;
 
 public class Procedure {
-
     final UserChoice userChoice;
     final ReadWriteInf readWriteInf;
     final StorageMemory storageMemory;
-
     final FixList fixList;
-    final SingleFormat singleFormatCompare = new FormatForCompare();
-    final SingleFormat singleFormat3 = new FormatForFormThree();
-    final SingleFormat singleFormat4 = new FormatForFormFour();
-    final SingleFormat singleFormat6 = new FormatForFormSix();
+    final Format singleFormatCompare = new FormatForCompare();
+    final Format singleFormat3 = new FormatForFormThree();
+    final Format singleFormat4 = new FormatForFormFour();
+    final Format singleFormat6 = new FormatForFormSix();
     final ListCompare listCompare;
 
     final String pathListOneTxt = System.getProperty("user.home") + "\\ErdrPlus\\listOne.txt";
     final String pathListTwoTxt = System.getProperty("user.home") + "\\ErdrPlus\\listTwo.txt";
     final String pathResultTxt = System.getProperty("user.home") + "\\ErdrPlus\\Result.txt";
-
 
     final private String[] arrS = {"", "115", "121", "122", "125", "162", "185", "186", "187", "263", "289", "296", "307", "309", "311"};
     final private String[] arrS1 = {"", "115", "121", "122", "125", "146", "149", "152", "153", "154", "155", "156", "162", "185", "186", "187", "189", "190", "191", "194", "199", "209", "222", "249", "255", "256", "257", "263",
@@ -40,19 +36,16 @@ public class Procedure {
     }
 
     public void start() throws IOException {
-
         System.out.println(
-                "1- сравнить два списка ЕРДР (listOne.txt listTwo.txt)\n"
-                        + "2- сравнить любые два аналогичных списка (listOne.txt listTwo.txt)\n"
-                        + "3- подготовить список ердр в формате 1 2021 10001-1234567 ( listOne.txt )\n"
-                        + "4- подготовить список ердр в формате 12021100011234567000 (с 000 в конце) (listOne.txt)\n"
-                        + "5- преобразовать форму статьи ККУ cт.185 ч.1 в простую форму 185 (listOne.txt)\n"
-                        + "6- добавление строк, а также проверка списка фамилий (для выплат) (listOne.txt)\n"
-                        + "7- создание формы для командировки. Внимание!!! Возможно неполное названия должности (listOne.txt)");
+                "1- порівняти два списки ЕРДР (listOne.txt listTwo.txt)\n"
+                        + "2- порівняти будь-які два аналогічні списки (listOne.txt listTwo.txt)\n"
+                        + "3- підготувати список ердр у форматі 1 2021 10001-1234567 ( listOne.txt )\n"
+                        + "4- підготувати список ердр у форматі 12021100011234567000 (з 000 наприкінці) (listOne.txt)\n"
+                        + "5- перетворити форму статті ККУ cт.185 ч.1 у просту форму 185 (listOne.txt)\n"
+                        + "6- додавання рядків, а також перевірка списку прізвищ (для виплат) (listOne.txt)\n"
+                        + "7- створення форми для відрядження. Увага!!! Можлива неповна назва посади (listOne.txt)\n"
+                        + "8- порівняти два списки працівників (поточний - listOne, попередній - ListTwo)");
         userChoice.choice();
-        //в зависимости от выбраного варианта:
-        //1 - сравнить два списка compare two lists
-
         if (userChoice.getChoice() == 1) {
             //а- прочитать первый список с внешнего ресурса "D:\\Test\\ErdrPlus\\listOne.txt";
             //б- сохранить его в памяти компютера в форме динмасива
@@ -105,15 +98,18 @@ public class Procedure {
         }
         if (userChoice.getChoice() == 7) {
             storageMemory.setListOne(readWriteInf.readWithCoding(pathListOneTxt));
-            //storageMemory.setListPoliceman(new Separate().getListPoliceman(storageMemory));
-           new SeparateList().separateListEmployees(storageMemory);
-//            storageMemory.getListResult().stream().forEach(System.out::println);
+            new SeparateList().separateListEmployees(storageMemory);
             readWriteInf.writeWithCodding(pathResultTxt, storageMemory);
-
-
-
-            };
+        }
+        if (userChoice.getChoice() == 8) {
+            storageMemory.setListOne(readWriteInf.readWithCoding(pathListOneTxt));
+            storageMemory.setListTwo(readWriteInf.readWithCoding(pathListTwoTxt));
+            storageMemory.setListPolicemanOne(new Separate().getListPoliceman(storageMemory.getListOne()));
+            storageMemory.setListPolicemanTwo(new Separate().getListPoliceman(storageMemory.getListTwo()));
+            new CompareListEmp().compareEmployees(storageMemory);
+            readWriteInf.writeWithCodding(pathResultTxt, storageMemory);
         }
     }
+}
 
 
