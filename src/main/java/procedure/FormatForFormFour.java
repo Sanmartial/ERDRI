@@ -14,7 +14,9 @@ public class FormatForFormFour extends Format {
     }//приводим строки к единому формату в 17 символов
 
     public String stringErdr(String s) {
-        String ss=builderLine(s);
-        return ss+"000";
+        if (s.contains("120")) {
+            String ss = builderLine(s);
+            return ss + "000";
+        } else return "null";
     }
 }

@@ -12,23 +12,18 @@ public class SeparateList {
 
     List<String> listEmployees;
 
-    private List<String> listSurname = new ArrayList<>(); // Фамилия
-    private List<String> listFirstName = new ArrayList<>(); //Имя
-    private List<String> listPatronymic = new ArrayList<>(); //отчество
-    private List<String> listPosition = new ArrayList<>(); //должность
-    private List<String> listShortname = new ArrayList<>(); //ФИО
+    private final List<String> listSurname = new ArrayList<>(); // Фамилия
+    private final List<String> listFirstName = new ArrayList<>(); //Имя
+    private final List<String> listPatronymic = new ArrayList<>(); //отчество
+    private final List<String> listPosition = new ArrayList<>(); //должность
+    private final List<String> listShortname = new ArrayList<>(); //ФИО
     private List<String> listIssueWhom = new ArrayList<>();//выдано КОМУ
-    private List<String> listSurnameIsTenChar = new ArrayList<>();//фамилия из максимум 10 букв
-    private final String RegTokenID = "\\d{7}"; //номер жетона
-    private final String RegRank = "[(старший )? А-яі]* поліції";
-    ; //звание
-    private final String RegPosition = "([0-9\\),\\(]+) ([А-яіЇї\\s\\W0-9№]+)";//номер группы 2
-    private final String RegPositionWhom = "^([а-яйіїює'’]+)\\s([а-яйіїює'’]+)";
+    private final List<String> listSurnameIsTenChar = new ArrayList<>();//фамилия из максимум 10 букв
+
     private final String RegForName = "(поліції) ([А-ЯІЇЮЄа-яіїює'’]+) ([А-ЯІЇЮЄа-яіїює'’]+) ([А-ЯІЇЮЄа-яіїює'’]+)"; //нужно только указывать номер групы фамилия -2, имя 3, отчество - 4
 
     public void separateListEmployees(StorageMemory memory) {
         for (int i = 0; i < memory.getListOne().size(); i++) {
-
             if (memory.getListOne().get(i).length() > 60) {
                 listSurname.add(setSurname(memory.getListOne().get(i)));
                 listFirstName.add(setFirstName(memory.getListOne().get(i)));
@@ -108,33 +103,31 @@ public class SeparateList {
         StringBuilder sb = new StringBuilder();
         StringBuilder sb1 = new StringBuilder();
         sb.append(list);
-        //System.out.println(sb.substring(sizeWord-1));
         if (sb.substring(sizeWord - 1).toLowerCase(Locale.ROOT).equals("о")) {
             sb1.append(sb.substring(0, sizeWord - 1)).append("У");
             return sb1.substring(0);
         }
         if (sb.substring(sizeWord - 2).toLowerCase(Locale.ROOT).equals("ка")) {
-            sb1.append(sb.substring(0, sizeWord - 2)).append("ЦІ");
+            sb1.append(sb.substring(0, sizeWord - 2)).append("ЦI");
+            return sb1.substring(0);
+        }
+        if (sb.substring(sizeWord - 2).toLowerCase(Locale.ROOT).equals("ва")) {
+            sb1.append(sb.substring(0, sizeWord - 2)).append("ВIЙ");
             return sb1.substring(0);
         }
 
         if (sb.substring(sizeWord - 2).toLowerCase(Locale.ROOT).equals("ха")) {
-            sb1.append(sb.substring(0, sizeWord - 2)).append("СІ");
+            sb1.append(sb.substring(0, sizeWord - 2)).append("СI");
             return sb1.substring(0);
         }
 
-        if (sb.substring(sizeWord - 2).toLowerCase(Locale.ROOT).equals("ія")) {
-            sb1.append(sb.substring(0, sizeWord - 2)).append("ІЮ");
+        if (sb.substring(sizeWord - 2).toLowerCase(Locale.ROOT).equals("ія") || sb.substring(sizeWord - 2).toLowerCase(Locale.ROOT).equals("ій")) {
+            sb1.append(sb.substring(0, sizeWord - 2)).append("IЮ");
             return sb1.substring(0);
         }
 
-        if (sb.substring(sizeWord - 1).toLowerCase(Locale.ROOT).equals("я")) {
-            sb1.append(sb.substring(0, sizeWord - 1)).append("І");
-            return sb1.substring(0);
-        }
-
-        if (sb.substring(sizeWord - 2).toLowerCase(Locale.ROOT).equals("ій")) {
-            sb1.append(sb.substring(0, sizeWord - 2)).append("ІЮ");
+        if (sb.substring(sizeWord - 1).toLowerCase(Locale.ROOT).equals("я") || sb.substring(sizeWord - 1).toLowerCase(Locale.ROOT).equals("а")) {
+            sb1.append(sb.substring(0, sizeWord - 1)).append("I");
             return sb1.substring(0);
         }
 
@@ -150,10 +143,10 @@ public class SeparateList {
         }
 
         if (sb.substring(0).equals("ГАЛІШТЕЙ")) {
-            return "ГАЛІШТЕЙ";
+            return "ГАЛIШТЕЙ";
         }
         if (sb.substring(0).equals("ЦИТЛІШВІЛІ")) {
-            return "ЦИТЛІШВІЛІ";
+            return "ЦИТЛIШВIЛI";
         }
 
         if (sb.substring(sizeWord - 3).toLowerCase(Locale.ROOT).equals("ець")) {
@@ -172,11 +165,6 @@ public class SeparateList {
 
         if (sb.substring(sizeWord - 1).toLowerCase(Locale.ROOT).equals("й")) {
             sb1.append(sb.substring(0, sizeWord - 2)).append("ОМУ");
-            return sb1.substring(0);
-        }
-
-        if (sb.substring(sizeWord - 1).toLowerCase(Locale.ROOT).equals("а")) {
-            sb1.append(sb.substring(0, sizeWord - 1)).append("І");
             return sb1.substring(0);
         } else {
             sb1.append(sb.substring(0, sizeWord)).append("У");
@@ -228,23 +216,23 @@ public class SeparateList {
             return sb1.substring(0);
         }
         if (sb.substring(sizeWord - 2).toLowerCase(Locale.ROOT).equals("ія")) {
-            sb1.append(sb.substring(0, sizeWord - 2)).append("ії");
+            sb1.append(sb.substring(0, sizeWord - 2)).append("iї");
             return sb1.substring(0);
         }
         if (sb.substring(sizeWord - 2).toLowerCase(Locale.ROOT).equals("ій")) {
-            sb1.append(sb.substring(0, sizeWord - 2)).append("ію");
+            sb1.append(sb.substring(0, sizeWord - 2)).append("iю");
             return sb1.substring(0);
         }
         if (sb.substring(sizeWord - 2).toLowerCase(Locale.ROOT).equals("та")) {
-            sb1.append(sb.substring(0, sizeWord - 2)).append("ті");
+            sb1.append(sb.substring(0, sizeWord - 2)).append("тi");
             return sb1.substring(0);
         }
         if (sb.substring(sizeWord - 2).toLowerCase(Locale.ROOT).equals("на")) {
-            sb1.append(sb.substring(0, sizeWord - 2)).append("ні");
+            sb1.append(sb.substring(0, sizeWord - 2)).append("нi");
             return sb1.substring(0);
         }
         if (sb.substring(sizeWord - 2).toLowerCase(Locale.ROOT).equals("ла")) {
-            sb1.append(sb.substring(0, sizeWord - 2)).append("лі");
+            sb1.append(sb.substring(0, sizeWord - 2)).append("лi");
             return sb1.substring(0);
         }
         if (sb.substring(sizeWord - 2).toLowerCase(Locale.ROOT).equals("ль")) {
@@ -252,11 +240,11 @@ public class SeparateList {
             return sb1.substring(0);
         }
         if (sb.substring(sizeWord - 2).toLowerCase(Locale.ROOT).equals("ра")) {
-            sb1.append(sb.substring(0, sizeWord - 2)).append("рі");
+            sb1.append(sb.substring(0, sizeWord - 2)).append("рi");
             return sb1.substring(0);
         }
         if (sb.substring(sizeWord - 2).toLowerCase(Locale.ROOT).equals("га")) {
-            sb1.append(sb.substring(0, sizeWord - 2)).append("зі");
+            sb1.append(sb.substring(0, sizeWord - 2)).append("зi");
             return sb1.substring(0);
         } else {
             sb1.append(sb.substring(0, sizeWord)).append("у");
@@ -277,7 +265,7 @@ public class SeparateList {
         sb.append(list);
 
         if (sb.substring(sizeWord - 2).toLowerCase(Locale.ROOT).equals("на")) {
-            sb1.append(sb.substring(0, sizeWord - 2)).append("ні");
+            sb1.append(sb.substring(0, sizeWord - 2)).append("нi");
             return sb1.substring(0);
         } else {
             sb1.append(sb.substring(0, sizeWord)).append("у");
@@ -286,14 +274,16 @@ public class SeparateList {
     } //меняем окончание отчества
 
     private String setPosition(String fromList) {
-
         String word1;
         String word2;
         StringBuilder sb = new StringBuilder();
         StringBuilder sb1 = new StringBuilder();
-        String list = separateWithRegExpression(RegPosition, fromList, 2);
-        word1 = separateWithRegExpression(RegPositionWhom, list, 1);
-        word2 = separateWithRegExpression(RegPositionWhom, list, 2);
+        //номер группы 2
+        String regPosition = "([0-9\\),\\(]+) ([А-яіЇї\\s\\W0-9№]+)";
+        String list = separateWithRegExpression(regPosition, fromList, 2);
+        String regPositionWhom = "^([а-яйіїює'’]+)\\s([а-яйіїює'’]+)";
+        word1 = separateWithRegExpression(regPositionWhom, list, 1);
+        word2 = separateWithRegExpression(regPositionWhom, list, 2);
         sb.append(word2);
         if (sb.substring(0).equals("взводу")) {
             sb1.append(" ");
@@ -324,9 +314,10 @@ public class SeparateList {
             return sb1.substring(0) + " " + word2;
         }
         if (sb.substring(sb.length() - 3).toLowerCase(Locale.ROOT).equals("ина")) {
-            sb1.append(sb.substring(0, sb.length() - 3)).append("ині".toLowerCase(Locale.ROOT));
+            sb1.append(sb.substring(0, sb.length() - 3)).append("инi".toLowerCase(Locale.ROOT));
             return sb1.substring(0) + " " + word2;
         } else
-   return sb1.substring(0); } //находим должность
+            return sb1.substring(0);
+    } //находим должность
 
 }
