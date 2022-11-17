@@ -11,7 +11,7 @@ public class FormatForFormSix extends Format {
     public void format(StorageMemory sm) {
         List<String> listResult = new ArrayList<>();
         for (int i = 0; i < sm.getListOne().size(); i++) {
-            listResult.add(sm.getListOne().get(i)+"\t");
+            listResult.add(sm.getListOne().get(i));
             for (int j = 0; j < 5; j++) {
                 if (j == 4) {
                     listResult.add(stringErdr(sm.getListOne().get(i)));

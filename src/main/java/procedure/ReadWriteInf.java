@@ -24,16 +24,33 @@ public class ReadWriteInf {
         return list;
     }
 
+//    public String writeWithCodding(String s, StorageMemory storageMemory) throws IOException {
+//        Date date = new Date();
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.YYYY HH.mm");
+//        File file = new File(s);
+//        int count = 0;
+//        try (OutputStream os = new FileOutputStream(file);
+//             OutputStreamWriter osw = new OutputStreamWriter(os, StandardCharsets.UTF_8)) {
+//            for (int i = 0; i < storageMemory.getListResult().size(); i++) {
+//                osw.write(storageMemory.getListResult().get(i));
+//                osw.write("\n");
+//                count++;
+//            }
+//
+//            System.out.println("Записано в файл " + Paths.get(s).getFileName() + " " + count + " рядків" + " | " + sdf.format(date) + " |");
+//            Desktop.getDesktop().open(new File(s));
+//        }
+//
+//        return "Записано в файл " + Paths.get(s).getFileName() + " " + count + " рядків" + " | " + sdf.format(date) + " |" + "  (" + storageMemory.getListOne().get(0) + ") ";
+//    }
     public String writeWithCodding(String s, StorageMemory storageMemory) throws IOException {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.YYYY HH.mm");
         File file = new File(s);
         int count = 0;
-        try (OutputStream os = new FileOutputStream(file);
-             OutputStreamWriter osw = new OutputStreamWriter(os, StandardCharsets.UTF_8)) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(file, StandardCharsets.UTF_8))) {
             for (int i = 0; i < storageMemory.getListResult().size(); i++) {
-                osw.write(storageMemory.getListResult().get(i));
-                osw.write("\n");
+                writer.println(storageMemory.getListResult().get(i));
                 count++;
             }
 
