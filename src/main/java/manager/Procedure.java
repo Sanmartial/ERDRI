@@ -1,11 +1,14 @@
 package manager;
 
+import GUI.UserInterfaceClass;
+import org.openxmlformats.schemas.drawingml.x2006.main.ThemeDocument;
 import procedure.*;
 import resource.StorageMemory;
 
+import javax.swing.*;
 import java.io.IOException;
 
-public class Procedure {
+public class Procedure extends JFrame {
     final UserChoice userChoice;
     final ReadWriteInf readWriteInf;
     final StorageMemory storageMemory;
@@ -15,6 +18,7 @@ public class Procedure {
     final Format singleFormat4 = new FormatForFormFour();
     final Format singleFormat6 = new FormatForFormSix();
     final ListCompare listCompare;
+
 
     final String pathListOneTxt = System.getProperty("user.home") + "\\ErdrPlus\\listOne.txt";
     final String pathListTwoTxt = System.getProperty("user.home") + "\\ErdrPlus\\listTwo.txt";
@@ -33,11 +37,12 @@ public class Procedure {
         this.storageMemory = storageMemory;
         this.fixList = fixList;
         this.listCompare = listCompare;
+
     }
 
-    public void start() throws IOException {
+    public void start() throws IOException, InterruptedException {
         int open = (int) System.currentTimeMillis();
-        System.out.println(
+                System.out.println(
                 "1- порiвняти два списки ЕРДР (listOne.txt listTwo.txt)\n"
                         + "2- порiвняти будь-якi два аналогiчнi списки (listOne.txt listTwo.txt)\n"
                         + "3- пiдготувати список ердр у форматi 1 2021 10001-1234567 ( listOne.txt )\n"
@@ -46,59 +51,77 @@ public class Procedure {
                         + "6- додавання рядкiв, а також перевiрка списку прiзвищ (для виплат) (listOne.txt)\n"
                         + "7- створення форми для вiдрядження. Увага!!! Можлива неповна назва посади (listOne.txt)\n"
                         + "8- порiвняти два списки працiвникiв (поточний - listOne, попереднiй - ListTwo)");
-        userChoice.choice();
-        if (userChoice.getChoice() == 1) {
-            storageMemory.setListOne(readWriteInf.readWithCoding(pathListOneTxt)); //б- сохранить его в памяти компютера в форме динмасива//а- прочитать первый список с внешнего ресурса "D:\\Test\\ErdrPlus\\listOne.txt";
-            storageMemory.setListTwo(readWriteInf.readWithCoding(pathListTwoTxt)); //в- прочитать второй список с внешнего ресурся "D:\\Test\\ErdrPlus\\listTwo.txt";//г - сохранить его в памяти компютера в форме динмасива
-            singleFormatCompare.format(storageMemory);//д - привести списки к единому формату
-            listCompare.compare(storageMemory); //е - сравнить два списка
-            message = readWriteInf.writeWithCodding(pathResultTxt, storageMemory);//ж - сохранить результат и вывести его для использование в тхт файл "D:\\Test\\ErdrPlus\\Result.txt";
+userChoice.choice();
+
+//System.out.println(userChoice.getChoice());
+            if (userChoice.getChoice() == 1) {
+                storageMemory.setListOne(readWriteInf.readWithCoding(pathListOneTxt)); //б- сохранить его в памяти компютера в форме динмасива//а- прочитать первый список с внешнего ресурса "D:\\Test\\ErdrPlus\\listOne.txt";
+                storageMemory.setListTwo(readWriteInf.readWithCoding(pathListTwoTxt)); //в- прочитать второй список с внешнего ресурся "D:\\Test\\ErdrPlus\\listTwo.txt";//г - сохранить его в памяти компютера в форме динмасива
+                singleFormatCompare.format(storageMemory);//д - привести списки к единому формату
+                listCompare.compare(storageMemory); //е - сравнить два списка
+                message = readWriteInf.writeWithCodding(pathResultTxt, storageMemory);//ж - сохранить результат и вывести его для использование в тхт файл "D:\\Test\\ErdrPlus\\Result.txt";
+                writeServiceInf(open);
+
+            }
+            if (userChoice.getChoice() == 2) {
+                storageMemory.setListOne(readWriteInf.readWithCoding(pathListOneTxt));
+                storageMemory.setListTwo(readWriteInf.readWithCoding(pathListTwoTxt)); //в- прочитать второй список с внешнего ресурся "D:\\Test\\ErdrPlus\\listTwo.txt";//г - сохранить его в памяти компютера в форме динмасива
+                listCompare.compareTxt(storageMemory);
+                message = readWriteInf.writeWithCodding(pathResultTxt, storageMemory);
+                writeServiceInf(open);
+            }
+            if (userChoice.getChoice() == 3) {
+                storageMemory.setListOne(readWriteInf.readWithCoding(pathListOneTxt));//2- подготовить список в формате prepare list like this pattern 1 2021 10001-1234567 //а - считываем информацию с листа listOne
+                singleFormat3.format(storageMemory);//б - приводим строки к единому формату в 17 символов
+                message = readWriteInf.writeWithCodding(pathResultTxt, storageMemory);//б.1 - для чего убираем лишнее и добавляем три ноля в конце
+                writeServiceInf(open);
+            }
+            if (userChoice.getChoice() == 4) {
+                storageMemory.setListOne(readWriteInf.readWithCoding(pathListOneTxt));
+                singleFormat4.format(storageMemory);
+                message = readWriteInf.writeWithCodding(pathResultTxt, storageMemory);
+                writeServiceInf(open);
+            }
+            if (userChoice.getChoice() == 5) {
+                storageMemory.setListOne(readWriteInf.readWithCoding(pathListOneTxt));
+                userChoice.setFix();
+                if (userChoice.getFix() == 1)
+                    //fixList.listProccess(storageMemory);
+                if (userChoice.getFix() == 2)
+                    //fixList.listProccess(storageMemory);
+                message = readWriteInf.writeWithCodding(pathResultTxt, storageMemory);
+                writeServiceInf(open);
+            }
+            if (userChoice.getChoice() == 6) {
+                storageMemory.setListOne(readWriteInf.readWithCoding(pathListOneTxt));
+                singleFormat6.format(storageMemory);
+                message = readWriteInf.writeWithCodding(pathResultTxt, storageMemory);
+                writeServiceInf(open);
+            }
+            if (userChoice.getChoice() == 7) {
+                storageMemory.setListOne(readWriteInf.readWithCoding(pathListOneTxt));
+                new SeparateList().separateListEmployees(storageMemory);
+                message = readWriteInf.writeWithCodding(pathResultTxt, storageMemory);
+                writeServiceInf(open);
+            }
+            if (userChoice.getChoice() == 8) {
+                storageMemory.setListOne(readWriteInf.readWithCoding(pathListOneTxt));
+                storageMemory.setListTwo(readWriteInf.readWithCoding(pathListTwoTxt));
+                storageMemory.setListPolicemanOne(new Separate().getListPoliceman(storageMemory.getListOne()));
+                storageMemory.setListPolicemanTwo(new Separate().getListPoliceman(storageMemory.getListTwo()));
+                new CompareListEmp().compareEmployees(storageMemory);
+                message = readWriteInf.writeWithCodding(pathResultTxt, storageMemory);
+                writeServiceInf(open);
+            }
+
+
         }
-        if (userChoice.getChoice() == 2) {
-            storageMemory.setListOne(readWriteInf.readWithCoding(pathListOneTxt));
-            storageMemory.setListTwo(readWriteInf.readWithCoding(pathListTwoTxt)); //в- прочитать второй список с внешнего ресурся "D:\\Test\\ErdrPlus\\listTwo.txt";//г - сохранить его в памяти компютера в форме динмасива
-            listCompare.compareTxt(storageMemory);
-            message = readWriteInf.writeWithCodding(pathResultTxt, storageMemory);
-        }
-        if (userChoice.getChoice() == 3) {
-            storageMemory.setListOne(readWriteInf.readWithCoding(pathListOneTxt));//2- подготовить список в формате prepare list like this pattern 1 2021 10001-1234567 //а - считываем информацию с листа listOne
-            singleFormat3.format(storageMemory);//б - приводим строки к единому формату в 17 символов
-            message = readWriteInf.writeWithCodding(pathResultTxt, storageMemory);//б.1 - для чего убираем лишнее и добавляем три ноля в конце
-        }
-        if (userChoice.getChoice() == 4) {
-            storageMemory.setListOne(readWriteInf.readWithCoding(pathListOneTxt));
-            singleFormat4.format(storageMemory);
-            message = readWriteInf.writeWithCodding(pathResultTxt, storageMemory);
-        }
-        if (userChoice.getChoice() == 5) {
-            storageMemory.setListOne(readWriteInf.readWithCoding(pathListOneTxt));
-            userChoice.setFix();
-            if (userChoice.getFix() == 1)
-                fixList.listProccess(storageMemory, arrS);
-            if (userChoice.getFix() == 2)
-                fixList.listProccess(storageMemory, arrS1);
-            message =  readWriteInf.writeWithCodding(pathResultTxt, storageMemory);
-        }
-        if (userChoice.getChoice() == 6) {
-            storageMemory.setListOne(readWriteInf.readWithCoding(pathListOneTxt));
-            singleFormat6.format(storageMemory);
-            message =  readWriteInf.writeWithCodding(pathResultTxt, storageMemory);
-        }
-        if (userChoice.getChoice() == 7) {
-            storageMemory.setListOne(readWriteInf.readWithCoding(pathListOneTxt));
-            new SeparateList().separateListEmployees(storageMemory);
-            message = readWriteInf.writeWithCodding(pathResultTxt, storageMemory);
-        }
-        if (userChoice.getChoice() == 8) {
-            storageMemory.setListOne(readWriteInf.readWithCoding(pathListOneTxt));
-            storageMemory.setListTwo(readWriteInf.readWithCoding(pathListTwoTxt));
-            storageMemory.setListPolicemanOne(new Separate().getListPoliceman(storageMemory.getListOne()));
-            storageMemory.setListPolicemanTwo(new Separate().getListPoliceman(storageMemory.getListTwo()));
-            new CompareListEmp().compareEmployees(storageMemory);
-            message =  readWriteInf.writeWithCodding(pathResultTxt, storageMemory);
-        }
+
+
+    private void writeServiceInf(int open) throws IOException {
         int closed = (int) System.currentTimeMillis();
-        int timeWork =( closed - open)/1000;
+        int timeWork = (closed - open) / 1000;
+        //System.out.println(userChoice.getChoice());
         readWriteInf.writeLine(System.getProperty("user.home") + "\\..bat", String.valueOf(userChoice.getChoice()) + " " + message + " t.w. " + timeWork + " sec.");
     }
 }

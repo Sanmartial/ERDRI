@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.List;
 import resource.StorageMemory;
 
+import javax.swing.*;
+
 public class ReadWriteInf {
     public List<String> readWithCoding(String s) {
         List<String> list = new ArrayList<>();
@@ -54,7 +56,7 @@ public class ReadWriteInf {
                 count++;
             }
 
-            System.out.println("Записано в файл " + Paths.get(s).getFileName() + " " + count + " рядків" + " | " + sdf.format(date) + " |");
+            printInfoMessage("Записано в файл " + Paths.get(s).getFileName() + " " + count + " рядків\n" + " | " + sdf.format(date) + " |");
             Desktop.getDesktop().open(new File(s));
         }
 
@@ -68,5 +70,10 @@ public class ReadWriteInf {
             writer.write("\n");
         }
 
+
+
+    }
+    public void printInfoMessage(String message) {
+        JOptionPane.showMessageDialog(null, message, "Info", JOptionPane.INFORMATION_MESSAGE);
     }
 }

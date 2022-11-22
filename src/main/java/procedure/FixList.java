@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FixList {
-    final private List<String> list1 = new ArrayList<>();
+     final private List<String> list1 = new ArrayList<>();
     public void listProccess(StorageMemory storageMemory, String[] arrS) {
         String s;
         for (int i = 0; i < storageMemory.getListOne().size(); i++) {
