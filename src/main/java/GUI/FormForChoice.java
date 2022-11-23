@@ -22,8 +22,8 @@ public class FormForChoice extends JFrame {
     JPanel panelE = new  JPanel();
 
     public FormForChoice(int open) throws HeadlessException {
-        super("ERDR #5");
-        setSize(400, 200);
+        super("#5");
+        setSize(200, 100);
 
         final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation(dim.width / 2 - getSize().width / 2, dim.height / 2 - getSize().height / 2);

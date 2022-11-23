@@ -8,7 +8,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
+
+import static java.awt.BorderLayout.*;
+import static java.awt.Color.*;
 
 public class UserInterfaceClass extends JFrame {
 
@@ -16,18 +20,19 @@ public class UserInterfaceClass extends JFrame {
 
     JPanel panel = new JPanel();
     JPanel panel2 = new JPanel();
+    JPanel panel3 = new JPanel();
 
     public UserInterfaceClass() throws HeadlessException {
         super("ERDR");
         int open = (int) System.currentTimeMillis();
         final Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize(700, 400);
+        setSize(800, 300);
 //        setLocation(dim.width / 2 - getSize().width / 2, dim.height / 2 - getSize().height / 2);
         setLocation(50, 50);
         setResizable(false);
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
+        Font font = new Font(Font.SANS_SERIF, Font.PLAIN, FONT_SIZE);
         JButton button1 = new JButton("Press 1");
         panel.add(button1);
         JButton button2 = new JButton("Press 2");
@@ -45,23 +50,56 @@ public class UserInterfaceClass extends JFrame {
         JButton button8 = new JButton("Press 8");
         panel.add(button8);
 
+        JTextField text11 = new JTextField("відкрити");
+        text11.setFont(font);
+        text11.setEditable(false);
+        text11.setForeground(Color.RED);
+        JTextField text12 = new JTextField();
+        text12.setEditable(false);
+        panel3.add(text12);
+        JTextField text15 = new JTextField();
+        text15.setEditable(false);
+        panel3.add(text15);
+        panel3.add(text11);
+        JButton buttonN1 = new JButton("listOne");
+        panel3.add(buttonN1);
+
+        JButton buttonN2 = new JButton("listTwo");
+        panel3.add(buttonN2);
+
+        JButton buttonN3 = new JButton("Result");
+        panel3.add(buttonN3);
+        JTextField text13 = new JTextField();
+        text13.setEditable(false);
+        panel3.add(text13);
+        JTextField text14 = new JTextField();
+        text14.setEditable(false);
+        panel3.add(text14);
+
         JTextField text1 = new JTextField("порiвняти два списки ЕРДР (listOne.txt listTwo.txt)");
-        Font font = new Font(Font.SANS_SERIF, Font.PLAIN, FONT_SIZE);
         text1.setFont(font);
+        text1.setEditable(false);
         JTextField text2 = new JTextField("порiвняти будь-якi два аналогiчнi списки (listOne.txt listTwo.txt)");
         text2.setFont(font);
+        text2.setEditable(false);
         JTextField text3 = new JTextField("пiдготувати список ердр у форматi 1 2021 10001-1234567 ( listOne.txt )");
         text3.setFont(font);
+        text3.setEditable(false);
         JTextField text4 = new JTextField("пiдготувати список ердр у форматi 12021100011234567000 (з 000 наприкiнцi) (listOne.txt)");
         text4.setFont(font);
+        text4.setEditable(false);
         JTextField text5 = new JTextField("перетворити форму статi ККУ cт.185 ч.1 у просту форму 185 (listOne.txt)");
         text5.setFont(font);
+        text5.setEditable(false);
         JTextField text6 = new JTextField("додавання рядкiв, а також перевiрка списку прiзвищ (для виплат) (listOne.txt)");
         text6.setFont(font);
+        text6.setEditable(false);
         JTextField text7 = new JTextField("створення форми для вiдрядження. Увага! Можлива неповна назва посади (listOne.txt)");
         text7.setFont(font);
+        text7.setEditable(false);
         JTextField text8 = new JTextField("порiвняти два списки працiвникiв (поточний - listOne, попереднiй - ListTwo)");
         text8.setFont(font);
+        text8.setEditable(false);
 
         panel2.add(text1);
         panel2.add(text2);
@@ -72,11 +110,13 @@ public class UserInterfaceClass extends JFrame {
         panel2.add(text7);
         panel2.add(text8);
 
-        panel.setLayout(new GridLayout(8, 1));
-        panel2.setLayout(new GridLayout(8, 1));
-
-        add(panel, BorderLayout.WEST);
-        add(panel2, BorderLayout.CENTER);
+        panel.setLayout(new GridLayout(panel.getComponentCount(), 1));
+        panel2.setLayout(new GridLayout(panel2.getComponentCount(), 1));
+        panel3.setLayout(new GridLayout(panel3.getComponentCount(), 1));
+        System.out.println(panel3.getComponentCount());
+        add(panel, WEST);
+        add(panel2, CENTER);
+        add(panel3, EAST);
 
         button1.addMouseListener(new MouseAdapter() {
             @Override
@@ -117,7 +157,6 @@ public class UserInterfaceClass extends JFrame {
         button4.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
                 super.mouseClicked(e);
                 ProcedureFour procedureFour = new ProcedureFour(new StorageMemory(), new ReadWriteInf(), new FormatForFormFour(), new ListCompare());
                 try {
@@ -131,10 +170,7 @@ public class UserInterfaceClass extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-
-                    FormForChoice form = new FormForChoice(open);
-
-
+                FormForChoice form = new FormForChoice(open);
             }
         });
         button6.addMouseListener(new MouseAdapter() {
@@ -175,7 +211,40 @@ public class UserInterfaceClass extends JFrame {
             }
         });
 
+        buttonN1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                try {
+                    Desktop.getDesktop().open(new File(System.getProperty("user.home") + "\\ErdrPlus\\listOne.txt"));
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
 
+        buttonN2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                try {
+                    Desktop.getDesktop().open(new File(System.getProperty("user.home") + "\\ErdrPlus\\listTwo.txt"));
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+        buttonN3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                try {
+                    Desktop.getDesktop().open(new File(System.getProperty("user.home") + "\\ErdrPlus\\Result.txt"));
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
 //        public void printInfoMessage(String message) {
 //            JOptionPane.showMessageDialog(this, message, "Info", JOptionPane.INFORMATION_MESSAGE);
 //        }
